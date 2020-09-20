@@ -1,0 +1,43 @@
+{% extends "app/base.html" %}
+{% block title %}Students{% endblock %}
+{% block content %}
+    <h2>Students</h2>
+    <div class="container">
+        <div class="row">
+            <table class="table table-sm table-hover">
+                <tr>
+                    <th>Name</th>
+                    <th>
+                        <form class="form-inline row" action="{% url 'home' %}">
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label" for="inlineFormInputName2">Faculty</label>
+                                <div class="col-sm-9">
+                                    <select class="custom-select" name="faculty">
+                                        <option selected>All</option>
+                                        {% for student in object_list %}
+                                            <option value="{{ student.faculty }}">{{ student.faculty }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        <button type="submit" class="btn btn-primary col-sm-1">Filter</button>
+                        </form>
+                    </th>
+                    <th>Year</th>
+                    <th>City</th>
+                </tr>
+
+                {% for student in object_list %}
+                    <tr>
+                        <td><a href="{% url 'student' student.pk %}">{{ student.name }}</a></td>
+                        <td>{{ student.faculty }}</td>
+                        <td>{{ student.year }}</td>
+                        <td>{{ student.city }}</td>
+                    </tr>
+                    {% empty %}
+                    <p>No students yet.</p>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+{% endblock %}
